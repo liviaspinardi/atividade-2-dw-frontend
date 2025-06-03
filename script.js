@@ -1,16 +1,20 @@
-const API_URL = 'https://atividade-2-dw.onrender.com/notas';
+const API_URL = 'https://atividade-2-dw.onrender.com/notas'; 
 
 async function listarNotas() {
-  const response = await fetch(API_URL);
-  const notas = await response.json();
-  document.getElementById('notas').innerHTML = notas.map((nota, index) => `
-    <div>
-      <h3>${nota.titulo}</h3>
-      <p>${nota.conteudo}</p>
-      <button onclick="editarNota(${index})">Editar</button>
-      <button onclick="excluirNota(${index})">Excluir</button>
-    </div>
-  `).join('');
+  try {
+    const response = await fetch(API_URL);
+    const notas = await response.json();
+    document.getElementById('notas').innerHTML = notas.map((nota, index) => `
+      <div class="nota">
+        <h3>${nota.titulo}</h3>
+        <p>${nota.conteudo}</p>
+        <button onclick="editarNota(${index})">Editar</button>
+        <button onclick="excluirNota(${index})">Excluir</button>
+      </div>
+    `).join('');
+  } catch (error) {
+    console.error("Erro ao carregar notas:", error);
+  }
 }
 
 async function criarNota() {
